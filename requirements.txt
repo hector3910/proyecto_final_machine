@@ -6,3 +6,5 @@ scikit-learn==1.6.1
 xgboost==2.1.4
 plotly
 gunicorn
+psycopg2-binary
+sqlalchemy
