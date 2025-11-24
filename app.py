@@ -50,18 +50,26 @@ server = app.server
 # 1. CARGA DE DATOS 
 # ============================================================
 
-# Conexión Postgres
-USER = "postgres"
-PASSWORD = "MinimishaAlaska_845" 
-HOST = "localhost"
-PORT = "5432"
-DB = "proyecto_final"
+import os
 
-engine = f"postgresql+psycopg2://{USER}:{PASSWORD}@{HOST}:{PORT}/{DB}"
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+if DATABASE_URL:
+    # Conexión Postgres Render
+    engine = DATABASE_URL
+else:
+    # Conexión Postgres local
+    USER = "postgres"
+    PASSWORD = "MinimishaAlaska_845" 
+    HOST = "localhost"
+    PORT = "5432"
+    DB = "proyecto_final"
+
+    engine = f"postgresql+psycopg2://{USER}:{PASSWORD}@{HOST}:{PORT}/{DB}"
+
 query = "SELECT * FROM credit_data ORDER BY id;"
 df = pd.read_sql(query, engine)
 df.drop(columns=["id"], inplace=True)
-
 
 # ============================================================
 # 2. CONFIG GENERALES
@@ -1720,4 +1728,5 @@ def update_corr(clase_sel, age_range, income_range, vars_sel):
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8050))
     app.run(debug=False, host="0.0.0.0", port=port)
+
 
