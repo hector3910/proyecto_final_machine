@@ -10,4 +10,5 @@ COPY . .
 
 EXPOSE 8050
 
-CMD ["python", "dashboard.py"]
+CMD ["python", "app.py"]
+
